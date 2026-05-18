@@ -1,5 +1,6 @@
 # Code Review Assistant
 
+![CI](https://github.com/pakhmutov/code-review-assistant/actions/workflows/ci.yml/badge.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)
