@@ -20,3 +20,11 @@ export interface ReviewRequest {
   code: string;
   language: string;
 }
+
+export interface HistoryEntry {
+  id: string;
+  code: string;
+  language: string;
+  review: ReviewResponse;
+  createdAt: number;
+}

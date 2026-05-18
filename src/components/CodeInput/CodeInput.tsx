@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './CodeInput.module.scss';
 
 const LANGUAGES = [
@@ -19,11 +19,23 @@ const LANGUAGES = [
 interface Props {
   onReview: (code: string, language: string) => void;
   loading: boolean;
+  value?: string;
+  language?: string;
+  onCodeChange?: (code: string) => void;
+  onLanguageChange?: (language: string) => void;
 }
 
-export default function CodeInput({ onReview, loading }: Props) {
-  const [code, setCode] = useState('');
-  const [language, setLanguage] = useState('Auto-detect');
+export default function CodeInput({ onReview, loading, value, language: languageProp, onCodeChange, onLanguageChange }: Props) {
+  const [code, setCode] = useState(value ?? '');
+  const [language, setLanguage] = useState(languageProp ?? 'Auto-detect');
+
+  useEffect(() => {
+    if (value !== undefined) setCode(value);
+  }, [value]);
+
+  useEffect(() => {
+    if (languageProp !== undefined) setLanguage(languageProp);
+  }, [languageProp]);
 
   const handleSubmit = () => {
     if (!code.trim() || loading) return;
