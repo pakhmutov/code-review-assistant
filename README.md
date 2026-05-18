@@ -1,8 +1,15 @@
 # Code Review Assistant
 
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)
+![License](https://img.shields.io/badge/License-MIT-green)
+
 AI-powered code review in your browser. Paste a snippet, get structured feedback across four categories — streamed in real time.
 
 **[Live →](https://code-review-assistant-vp.vercel.app)**
+
+![preview](public/preview.png)
 
 ---
 
