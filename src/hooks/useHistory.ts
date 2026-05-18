@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { HistoryEntry, ReviewResponse } from '@/types/review';
 
 const STORAGE_KEY = 'cra_history';
@@ -15,11 +15,7 @@ function load(): HistoryEntry[] {
 }
 
 export function useHistory() {
-  const [history, setHistory] = useState<HistoryEntry[]>([]);
-
-  useEffect(() => {
-    setHistory(load());
-  }, []);
+  const [history, setHistory] = useState<HistoryEntry[]>(() => load());
 
   const push = (code: string, language: string, review: ReviewResponse) => {
     const entry: HistoryEntry = {
