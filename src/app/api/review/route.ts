@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
-import { reviewCode } from '@/lib/gemini';
+import { streamReviewCode } from '@/lib/gemini';
 import { ReviewRequest } from '@/types/review';
 
 const ratelimit = new Ratelimit({
@@ -24,8 +24,10 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const review = await reviewCode(code, language);
-    return NextResponse.json(review);
+    const stream = streamReviewCode(code, language);
+    return new Response(stream, {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    });
   } catch (err) {
     console.error('[review] error:', err);
     return NextResponse.json({ error: String(err) }, { status: 500 });

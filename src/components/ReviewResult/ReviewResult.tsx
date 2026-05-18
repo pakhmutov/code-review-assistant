@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReviewResponse, ReviewCategory } from '@/types/review';
 import styles from './ReviewResult.module.scss';
 
@@ -12,14 +12,43 @@ const CATEGORY_META: Record<string, { emoji: string; label: string }> = {
 interface Props {
   review: ReviewResponse | null;
   loading: boolean;
+  streamingText: string | null;
   error: string | null;
 }
+
+const CATEGORIES = [
+  { type: 'bugs',         emoji: '🐛', label: 'Bugs' },
+  { type: 'improvements', emoji: '⚡', label: 'Improvements' },
+  { type: 'security',     emoji: '🔒', label: 'Security' },
+  { type: 'style',        emoji: '🎨', label: 'Code Style' },
+];
 
 function Skeleton() {
   return (
     <div className={styles.skeleton}>
       {[80, 60, 90, 50].map((w, i) => (
         <div key={i} className={styles.skeletonLine} style={{ width: `${w}%` }} />
+      ))}
+    </div>
+  );
+}
+
+function AnalyzingStatus() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setActive(i => (i + 1) % CATEGORIES.length), 700);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className={styles.analyzing}>
+      {CATEGORIES.map((cat, i) => (
+        <div key={cat.type} className={`${styles.analyzingRow} ${i === active ? styles.analyzingActive : ''}`}>
+          <span className={styles.analyzingEmoji}>{cat.emoji}</span>
+          <span className={styles.analyzingLabel}>{cat.label}</span>
+          {i === active && <span className={styles.analyzingDot} />}
+        </div>
       ))}
     </div>
   );
@@ -49,7 +78,7 @@ function Category({ category }: { category: ReviewCategory }) {
   );
 }
 
-export default function ReviewResult({ review, loading, error }: Props) {
+export default function ReviewResult({ review, loading, streamingText, error }: Props) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -81,18 +110,20 @@ export default function ReviewResult({ review, loading, error }: Props) {
       </div>
 
       <div className={styles.content}>
-        {loading && <Skeleton />}
-        {!loading && error && (
+        {loading && !streamingText && <Skeleton />}
+        {loading && streamingText !== null && <AnalyzingStatus />}
+        {!loading && streamingText !== null && <AnalyzingStatus />}
+        {!loading && streamingText === null && error && (
           <div className={styles.empty} role="alert">
             <p style={{ color: '#f87171' }}>{error}</p>
           </div>
         )}
-        {!loading && !error && !review && (
+        {!loading && streamingText === null && !error && !review && (
           <div className={styles.empty}>
             <p>Paste your code and click Review →</p>
           </div>
         )}
-        {!loading && review && review.categories.map((cat) => (
+        {!loading && streamingText === null && review && review.categories.map((cat) => (
           <Category key={cat.type} category={cat} />
         ))}
       </div>
