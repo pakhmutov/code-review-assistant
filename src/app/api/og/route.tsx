@@ -7,8 +7,8 @@ export async function GET() {
     (
       <div
         style={{
-          width: '100%',
-          height: '100%',
+          width: '1200px',
+          height: '630px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -17,75 +17,59 @@ export async function GET() {
           fontFamily: 'system-ui, sans-serif',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '16px',
-            marginBottom: '32px',
-          }}
-        >
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '32px' }}>
           <div
             style={{
-              width: '48px',
-              height: '48px',
+              width: '52px',
+              height: '52px',
               borderRadius: '12px',
               backgroundColor: '#7c6af7',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '24px',
+              fontSize: '26px',
+              marginRight: '16px',
             }}
           >
             ⚡
           </div>
-          <span style={{ fontSize: '20px', color: '#888', letterSpacing: '0.1em' }}>
+          <span style={{ fontSize: '18px', color: '#888', letterSpacing: '0.1em' }}>
             CODE REVIEW ASSISTANT
           </span>
         </div>
 
         <div
           style={{
-            fontSize: '64px',
+            display: 'flex',
+            flexDirection: 'column',
+            fontSize: '60px',
             fontWeight: 700,
             color: '#e8e8e8',
-            lineHeight: 1.1,
-            marginBottom: '24px',
+            lineHeight: '1.15',
+            marginBottom: '28px',
           }}
         >
-          AI-powered code review
-          <br />
+          <span>AI-powered code review</span>
           <span style={{ color: '#7c6af7' }}>in seconds.</span>
         </div>
 
-        <div style={{ fontSize: '24px', color: '#888', lineHeight: 1.5 }}>
-          Paste your code → get structured feedback on bugs,
-          <br />
-          security, performance and code style.
+        <div style={{ display: 'flex', fontSize: '22px', color: '#888' }}>
+          Paste code — get feedback on bugs, security and style.
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            gap: '12px',
-            marginTop: '48px',
-          }}
-        >
-          {['🐛 Bugs', '⚡ Improvements', '🔒 Security', '🎨 Code Style'].map((label) => (
-            <div
-              key={label}
-              style={{
-                padding: '8px 16px',
-                border: '1px solid #2e2e2e',
-                borderRadius: '8px',
-                fontSize: '16px',
-                color: '#e8e8e8',
-                backgroundColor: '#1a1a1a',
-              }}
-            >
-              {label}
-            </div>
-          ))}
+        <div style={{ display: 'flex', marginTop: '48px' }}>
+          <div style={{ display: 'flex', padding: '8px 16px', border: '1px solid #2e2e2e', borderRadius: '8px', fontSize: '16px', color: '#e8e8e8', backgroundColor: '#1a1a1a', marginRight: '10px' }}>
+            🐛 Bugs
+          </div>
+          <div style={{ display: 'flex', padding: '8px 16px', border: '1px solid #2e2e2e', borderRadius: '8px', fontSize: '16px', color: '#e8e8e8', backgroundColor: '#1a1a1a', marginRight: '10px' }}>
+            ⚡ Improvements
+          </div>
+          <div style={{ display: 'flex', padding: '8px 16px', border: '1px solid #2e2e2e', borderRadius: '8px', fontSize: '16px', color: '#e8e8e8', backgroundColor: '#1a1a1a', marginRight: '10px' }}>
+            🔒 Security
+          </div>
+          <div style={{ display: 'flex', padding: '8px 16px', border: '1px solid #2e2e2e', borderRadius: '8px', fontSize: '16px', color: '#e8e8e8', backgroundColor: '#1a1a1a' }}>
+            🎨 Code Style
+          </div>
         </div>
       </div>
     ),
