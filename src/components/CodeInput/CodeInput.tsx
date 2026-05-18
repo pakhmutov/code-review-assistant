@@ -30,10 +30,18 @@ export default function CodeInput({ onReview, loading }: Props) {
     onReview(code, language);
   };
 
+  const handlePaste = async () => {
+    const text = await navigator.clipboard.readText();
+    if (text) setCode(text);
+  };
+
   return (
     <div className={styles.panel}>
       <div className={styles.toolbar}>
         <span className={styles.label}>Code</span>
+        <button className={styles.pasteBtn} onClick={handlePaste} aria-label="Paste from clipboard">
+          Paste
+        </button>
         <select
           className={styles.select}
           value={language}

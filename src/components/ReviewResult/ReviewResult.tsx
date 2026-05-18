@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ReviewResponse, ReviewCategory } from '@/types/review';
 import styles from './ReviewResult.module.scss';
 
@@ -49,6 +50,21 @@ function Category({ category }: { category: ReviewCategory }) {
 }
 
 export default function ReviewResult({ review, loading, error }: Props) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    if (!review) return;
+    const text = review.categories
+      .map(c => {
+        const meta = CATEGORY_META[c.type];
+        return `${meta.emoji} ${meta.label}\n${c.items.map(i => `• ${i.description}`).join('\n')}`;
+      })
+      .join('\n\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className={styles.panel}>
       <div className={styles.toolbar}>
@@ -56,17 +72,10 @@ export default function ReviewResult({ review, loading, error }: Props) {
         {review && (
           <button
             className={styles.copy}
-            onClick={() => {
-              const text = review.categories
-                .map(c => {
-                  const meta = CATEGORY_META[c.type];
-                  return `${meta.emoji} ${meta.label}\n${c.items.map(i => `• ${i.description}`).join('\n')}`;
-                })
-                .join('\n\n');
-              navigator.clipboard.writeText(text);
-            }}
+            onClick={handleCopy}
+            aria-label="Copy review to clipboard"
           >
-            Copy
+            {copied ? 'Copied!' : 'Copy'}
           </button>
         )}
       </div>
@@ -74,7 +83,7 @@ export default function ReviewResult({ review, loading, error }: Props) {
       <div className={styles.content}>
         {loading && <Skeleton />}
         {!loading && error && (
-          <div className={styles.empty}>
+          <div className={styles.empty} role="alert">
             <p style={{ color: '#f87171' }}>{error}</p>
           </div>
         )}
